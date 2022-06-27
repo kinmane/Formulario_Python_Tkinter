@@ -1,6 +1,6 @@
 from cgitb import text
 from tkinter import *
-from tkinter import font
+from tkinter import font, ttk
 from tkcalendar import Calendar, DateEntry
 
 # Cores
@@ -57,20 +57,64 @@ entry_telefone.place(x=15, y=160)
 
 # Data da consulta
 label_calendario = Label(frame_baixo, text='Data da Consulta', anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4, relief='flat')
-label_calendario.place(x=10, y=190)
-entry_calendario = Entry(frame_baixo, width=45, justify='left', relief='solid')
-entry_calendario.place(x=15, y=40)
+label_calendario.place(x=15, y=190)
+entry_calendario = DateEntry(frame_baixo, width=12, background='darkblue', foreground='white', borderwidth=2, locale='pt_BR')
+entry_calendario.place(x=15, y=220)
 
 # Prioridade
-label_nome = Label(frame_baixo, text='Nome', anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4, relief='flat')
-label_nome.place(x=10, y=10)
-entry_nome = Entry(frame_baixo, width=45, justify='left', relief='solid')
-entry_nome.place(x=15, y=40)
+label_prioridade = Label(frame_baixo, text='Prioridade', anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4, relief='flat')
+label_prioridade.place(x=160, y=190)
+entry_prioridade = Entry(frame_baixo, width=21, justify='left', relief='solid')
+entry_prioridade.place(x=160, y=220)
 
-# Consulta sobre
-label_nome = Label(frame_baixo, text='Nome', anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4, relief='flat')
-label_nome.place(x=10, y=10)
+# Especialista
+label_nome = Label(frame_baixo, text='Especialista', anchor=NW, font=('Ivy 10 bold'), bg=cor1, fg=cor4, relief='flat')
+label_nome.place(x=15, y=260)
 entry_nome = Entry(frame_baixo, width=45, justify='left', relief='solid')
-entry_nome.place(x=15, y=40)
+entry_nome.place(x=15, y=290)
+
+# Botões
+botao_inserir = Button(frame_baixo, text='Inserir', width=10, font=('Ivy 8 bold'), bg=cor6, fg=cor1, relief='raised', overrelief='ridge')
+botao_inserir.place(x=15, y=340)
+botao_atualizar = Button(frame_baixo, text='Atualizar', width=10, font=('Ivy 8 bold'), bg=cor2, fg=cor1, relief='raised', overrelief='ridge')
+botao_atualizar.place(x=112, y=340)
+botao_deletar = Button(frame_baixo, text='Deletar', width=10, font=('Ivy 8 bold'), bg=cor7, fg=cor1, relief='raised', overrelief='ridge')
+botao_deletar.place(x=210, y=340)
+
+# Tabelas
+lista = [[1, 'Fulano', 'fulano@gmail.com', 123456789, '27/06/2022', 'Normal', 'Clínico Geral'],
+         [2, 'Beltrano', 'beltrano@gmail.com', 123456789, '27/06/2022', 'Normal', 'Clínico Geral'],
+         [3, 'Siclano', 'siclano@gmail.com', 123456789, '27/06/2022', 'Normal', 'Clínico Geral']
+         ]
+
+nomes_listas = ['ID', 'Nome', 'E-mail', 'Telefone', 'Data', 'Prioridade', 'Especialista']
+
+tree = ttk.Treeview(frame_direita, selectmode='extended', columns=nomes_listas, show='headings')
+
+vertical_scrollbar = ttk.Scrollbar(frame_direita, orient='vertical', command=tree.xview)
+
+horizontal_scrollbar = ttk.Scrollbar(frame_direita, orient='horizontal', command=tree.xview)
+
+tree.configure(yscrollcommand=vertical_scrollbar.set, xscrollcommand=horizontal_scrollbar.set)
+
+tree.grid(column=0, row=0, sticky='NSEW')
+vertical_scrollbar.grid(column=1, row=0, sticky='NS')
+horizontal_scrollbar.grid(column=0, row=1, sticky='EW')
+
+frame_direita.grid_rowconfigure(0, weight=12)
+
+identacao_lista = ['nw', 'nw', 'nw', 'nw', 'nw', 'center', 'center']
+tamanho_tabela = [30, 170, 140, 100, 120, 50, 100]
+n=0
+
+for coluna in nomes_listas:
+    tree.heading(coluna, text=coluna.title(), anchor=CENTER)
+    tree.column(coluna, width=tamanho_tabela[n], anchor=identacao_lista[n])
+
+    n += 1
+
+for item in lista:
+    tree.insert('', 'end', values=item)
+
 
 janela.mainloop()
