@@ -10,3 +10,11 @@ cor6 = "#038cfc"  # Azul
 cor7 = "#ef5350"  # Vermelho
 cor8 = "#263238"  # + verde
 cor9 = "#e9edf5"  # Sky blue
+
+janela = Tk()
+janela.title('Consultas')
+janela.geometry('1043x453')
+janela.configure(background=cor9)
+janela.
+
+janela.mainloop()
