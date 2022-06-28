@@ -24,17 +24,18 @@ def mostrar_info():
         for infos in informacao:
             lista.append(infos)
     return lista
-'''
+
 # Atualizar
-with conexao:
-    cursor = conexao.cursor()
-    query = 'UPDATE formulario SET nome=? WHERE id=?'
-    cursor.execute(query, lista)
+def atualizar_info(i):
+    with conexao:
+        cursor = conexao.cursor()
+        query = 'UPDATE formulario SET nome=?, email=?, telefone=?, dia_consulta=?, prioridade=?, assunto=?  WHERE id=?'
+        cursor.execute(query, i)
 
 # Deletar
-with conexao:
-    cursor = conexao.cursor()
-    query = 'DELETE FROM formulario WHERE id=?'
-    cursor.execute(query, lista)
+def deletar_info(i):
+    with conexao:
+        cursor = conexao.cursor()
+        query = 'DELETE FROM formulario WHERE id=?'
+        cursor.execute(query, i)
 
-'''

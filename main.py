@@ -70,10 +70,10 @@ def inserir():
 def atualizar():
     try:
         treeview_dados = tree.focus()
-        treeview_dicionario = tree.item(tree)
+        treeview_dicionario = tree.item(treeview_dados)
         tree_lista = treeview_dicionario['values']
 
-        valor = tree_lista[0]
+        valor_id = tree_lista[0]
 
         entry_nome.delete(0, 'end')
         entry_email.delete(0, 'end')
@@ -89,20 +89,20 @@ def atualizar():
         entry_prioridade.insert(0, tree_lista[5])
         entry_especialista.insert(0, tree_lista[6])
 
-        def atualizados():
+        def update():
             nome = entry_nome.get()
             email = entry_email.get()
             telefone = entry_telefone.get()
-            calendario = entry_calendario.get()
+            dia_consulta = entry_calendario.get()
             prioridade = entry_prioridade.get()
-            especialista = entry_especialista.get()
+            assunto = entry_especialista.get()
 
-            lista = [nome, email, telefone, calendario, prioridade, especialista]
+            lista = [nome, email, telefone, dia_consulta, prioridade, assunto, valor_id]
 
             if nome == '':
                 messagebox.showerror('Erro', 'O nome não pode ser vazio')
             else:
-                inserir_info(lista)
+                atualizar_info(lista)
                 messagebox.showinfo('Sucesso', 'Os dados foram atualizados com sucesso')
 
                 entry_nome.delete(0, 'end')
@@ -116,6 +116,32 @@ def atualizar():
                 widget.destroy()
 
             mostrar()
+
+        botao_confirmar = Button(frame_baixo, command=update, text='Confirmar', width=10, font=('Ivy 8 bold'), bg=cor2, fg=cor1, relief='raised', overrelief='ridge')
+        botao_confirmar.place(x=112, y=368)
+
+
+    except IndexError:
+        messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
+
+def deletar():
+    try:
+        treeview_dados = tree.focus()
+        treeview_dicionario = tree.item(treeview_dados)
+        tree_lista = treeview_dicionario['values']
+
+        valor_id = [tree_lista[0]]
+
+        deletar_info(valor_id)
+        messagebox.showinfo('Sucesso', 'O dado foi deletado com sucesso')
+
+        for widget in frame_direita.winfo_children():
+            widget.destroy()
+
+        mostrar()
+
+    except IndexError:
+        messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
 
 
 # Configuração tela preenchimento
@@ -158,9 +184,9 @@ entry_especialista.place(x=15, y=290)
 # Botões
 botao_inserir = Button(frame_baixo, command=inserir,text='Inserir', width=10, font=('Ivy 8 bold'), bg=cor6, fg=cor1, relief='raised', overrelief='ridge')
 botao_inserir.place(x=15, y=340)
-botao_atualizar = Button(frame_baixo, text='Atualizar', width=10, font=('Ivy 8 bold'), bg=cor2, fg=cor1, relief='raised', overrelief='ridge')
+botao_atualizar = Button(frame_baixo, command=atualizar,text='Atualizar', width=10, font=('Ivy 8 bold'), bg=cor2, fg=cor1, relief='raised', overrelief='ridge')
 botao_atualizar.place(x=112, y=340)
-botao_deletar = Button(frame_baixo, text='Deletar', width=10, font=('Ivy 8 bold'), bg=cor7, fg=cor1, relief='raised', overrelief='ridge')
+botao_deletar = Button(frame_baixo, command=deletar,text='Deletar', width=10, font=('Ivy 8 bold'), bg=cor7, fg=cor1, relief='raised', overrelief='ridge')
 botao_deletar.place(x=210, y=340)
 
 def mostrar():
