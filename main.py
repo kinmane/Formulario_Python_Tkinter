@@ -1,7 +1,6 @@
-from cgitb import text
 from tkinter import *
-from tkinter import font, ttk, messagebox
-from tkcalendar import Calendar, DateEntry
+from tkinter import ttk, messagebox
+from tkcalendar import DateEntry
 from view import *
 
 # Cores
@@ -28,16 +27,17 @@ frame_cima = Frame(janela, width=310, height=50, bg=cor2, relief='flat')
 frame_cima.grid(row=0, column=0)
 
 frame_baixo = Frame(janela, width=310, height=400, bg=cor1, relief='flat')
-frame_baixo.grid(row=1, column=0, padx=0, pady=1,sticky=NSEW)
+frame_baixo.grid(row=1, column=0, padx=0, pady=1, sticky=NSEW)
 
 frame_direita = Frame(janela, width=588, height=403, bg=cor1, relief='flat')
-frame_direita.grid(row=0, column=1, rowspan=2, padx=1, pady=0,sticky=NSEW)
+frame_direita.grid(row=0, column=1, rowspan=2, padx=1, pady=0, sticky=NSEW)
 
 # Tela cima
 app_nome = Label(frame_cima, text='Formulário de Consulta', anchor=NW, font=('Ivy 13 bold'), bg=cor2, fg=cor1, relief='flat')
 app_nome.place(x=10, y=20)
 
 global tree
+
 
 def inserir():
     nome = entry_nome.get()
@@ -66,6 +66,7 @@ def inserir():
         widget.destroy()
 
     mostrar()
+
 
 def atualizar():
     try:
@@ -123,6 +124,7 @@ def atualizar():
 
     except IndexError:
         messagebox.showerror('Erro', 'Seleciona um dos dados na tabela')
+
 
 def deletar():
     try:
@@ -182,12 +184,13 @@ entry_especialista = Entry(frame_baixo, width=45, justify='left', relief='solid'
 entry_especialista.place(x=15, y=290)
 
 # Botões
-botao_inserir = Button(frame_baixo, command=inserir,text='Inserir', width=10, font=('Ivy 8 bold'), bg=cor6, fg=cor1, relief='raised', overrelief='ridge')
+botao_inserir = Button(frame_baixo, command=inserir, text='Inserir', width=10, font=('Ivy 8 bold'), bg=cor6, fg=cor1, relief='raised', overrelief='ridge')
 botao_inserir.place(x=15, y=340)
-botao_atualizar = Button(frame_baixo, command=atualizar,text='Atualizar', width=10, font=('Ivy 8 bold'), bg=cor2, fg=cor1, relief='raised', overrelief='ridge')
+botao_atualizar = Button(frame_baixo, command=atualizar, text='Atualizar', width=10, font=('Ivy 8 bold'), bg=cor2, fg=cor1, relief='raised', overrelief='ridge')
 botao_atualizar.place(x=112, y=340)
-botao_deletar = Button(frame_baixo, command=deletar,text='Deletar', width=10, font=('Ivy 8 bold'), bg=cor7, fg=cor1, relief='raised', overrelief='ridge')
+botao_deletar = Button(frame_baixo, command=deletar, text='Deletar', width=10, font=('Ivy 8 bold'), bg=cor7, fg=cor1, relief='raised', overrelief='ridge')
 botao_deletar.place(x=210, y=340)
+
 
 def mostrar():
     global tree
@@ -212,7 +215,7 @@ def mostrar():
 
     identacao_lista = ['nw', 'nw', 'nw', 'nw', 'nw', 'center', 'center']
     tamanho_tabela = [30, 170, 140, 100, 120, 50, 100]
-    n=0
+    n = 0
 
     for coluna in nomes_listas:
         tree.heading(coluna, text=coluna.title(), anchor=CENTER)
@@ -222,6 +225,7 @@ def mostrar():
 
     for item in lista:
         tree.insert('', 'end', values=item)
+
 
 mostrar()
 
